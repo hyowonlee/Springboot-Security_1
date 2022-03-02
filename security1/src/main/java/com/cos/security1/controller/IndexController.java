@@ -32,7 +32,7 @@ public class IndexController {
 	public @ResponseBody String testLogin(Authentication authentication, //스프링 시큐리티에서 Authentication객체는 세션객체로써 di되어 들어온 객체로 PrincipalDetails.java에 설명 적어놨음 
 			@AuthenticationPrincipal PrincipalDetails userDetails) { //@AuthenticationPrincipal 이 어노테이션을 통해 세션정보에 접근할 수 있음 UserDetails타입을 반환하기에 우리가 구현한 PrincipalDetails로 받을수 있음
 		System.out.println("/test/login ===================");
-		PrincipalDetails principalDetails = (PrincipalDetails)authentication.getPrincipal(); //Authentication객체의 getPrincipal() 메서드를 실행하면 UserDetails를 구현한 사용자객체를 return 그럼 우리는 PrincipalDetails를 리턴할것
+		PrincipalDetails principalDetails = (PrincipalDetails)authentication.getPrincipal(); //Authentication객체의 getPrincipal() 메서드를 실행하면 UserDetails타입의 사용자객체를 return 그럼 우리는 UserDetails를 구현한 PrincipalDetails로 다운캐스팅
 		System.out.println("authentication : "+ principalDetails.getUser()); //이렇게 Authentication을 다운캐스팅 해서 안에있는 User객체를 가져올수도 있고
 		
 		System.out.println("userDetails : "+userDetails.getUser());//아니면 @AuthenticationPrincipal을 통해 User객체를 가져올수도 있다
@@ -41,12 +41,17 @@ public class IndexController {
 	
 	//구글 oauth 로그인 시
 	@GetMapping("/test/oauth/login")
-	public @ResponseBody String testOAuthLogin(Authentication authentication) { 
+	public @ResponseBody String testOAuthLogin(Authentication authentication,
+			@AuthenticationPrincipal OAuth2User oauth) { //여기서도 위처럼 @AuthenticationPrincipal로 세션정보에 접근가능함 대신 타입이 위와 다름
 		System.out.println("/test/oauth/login ===================");
 		OAuth2User oauth2User = (OAuth2User)authentication.getPrincipal(); //구글 로그인시 Authentication객체의 getPrincipal() 메서드를 실행하면 OAuth2User 객체를 리턴
 		System.out.println("authentication : "+ oauth2User.getAttributes()); //이렇게 Authentication을 다운캐스팅 해서 안에있는 User객체를 가져올수도 있다
+		System.out.println("oauth2User : "+oauth.getAttributes()); //아니면 @AuthenticationPrincipal을 통해 User객체를 가져올수도 있다
 		
 		return "OAuth 세션정보확인하기";
+		
+		//이렇게 일반로그인 oauth 로그인 객체가 UserDetails/OAuth2User로 2개면 처리하기 귀찮음 그래서 이 2개를 다 상속받는 객체를 사용해주면 편함
+		//즉 우리가 만든 PrincipalDetails이 이 2개다 상속받으면 된다는거
 	}
 	
 	//localhost:8080/
