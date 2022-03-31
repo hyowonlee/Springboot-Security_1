@@ -7,6 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.CreationTimestamp;
 
 import lombok.Builder;
@@ -14,6 +15,7 @@ import lombok.Data;
 
 @Entity //이게 jpa 테이블 자동생성 어노테이션
 @Data
+@NoArgsConstructor
 public class User {
 	@Id //primary key
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

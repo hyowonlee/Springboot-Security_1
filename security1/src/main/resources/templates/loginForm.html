@@ -13,6 +13,11 @@
 	<button>로그인</button>
 </form>
 <a href="/oauth2/authorization/google">구글 로그인</a>
+<!--oauth2 client 라이브러리에서 제공하는 uri로 구글로그인시 이 uri을 요청하면됨 고정된 주소임-->
+<!--이와 마찬가지로 인증 후 code를 받는 리다이렉션 uri도 원래 우리가 전부다 하나하나 개발하는거면 우리 맘대로 주소를 만들고 그 주소로 처리했지만
+oauth2 client 라이브러리에선 /login/oauth2/code/google로 고정이다 코드 처리도 알아서 해줌 내가 처리할 필요 없음-->
+<a href="/oauth2/authorization/naver">네이버 로그인</a>
+<!--네이버도 똑같이 oauth2 client 라이브러리에서 제공하는 고정된 uri로 요청하면 application.yml의 provider 등록한부분에서 authoriztion-uri로 등록된 주소가 요청됨-->
 <a href="/joinForm">회원가입을 아직 하지 않으셨나요?</a>
 </body>
 </html>

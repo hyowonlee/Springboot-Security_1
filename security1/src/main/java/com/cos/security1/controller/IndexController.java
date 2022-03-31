@@ -67,9 +67,12 @@ public class IndexController {
 		
 		//여기서  index로 처음 들어가보면 스프링시큐리티 로그인창이 나옴 시큐리티 의존성 등록을 하면 기본적으로 모든 url은 막혀서 인증이 필요한 서버가 됨
 	}
-	
+
+	//일반로그인을 해도 PrincipalDetails로 받음
+	//oauth 로그인해도 PrincipalDetails로 받음
 	@GetMapping("/user")
-	public @ResponseBody String user() {
+	public @ResponseBody String user(@AuthenticationPrincipal PrincipalDetails principalDetails) {
+		System.out.println("principalDetails : "+principalDetails.getUser());
 		return "user";
 	}
 	
